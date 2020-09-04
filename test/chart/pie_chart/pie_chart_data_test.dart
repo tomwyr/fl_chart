@@ -54,8 +54,8 @@ void main() {
           pieChartData1 ==
               pieChartData1Clone.copyWith(
                 sections: [
-                  PieChartSectionData(value: 12, color: Colors.red),
-                  PieChartSectionData(value: 22, color: Colors.green),
+                  PieChartSectionData(value: 12, colors: [Colors.red]),
+                  PieChartSectionData(value: 22, colors: [Colors.green]),
                 ],
               ),
           true);
@@ -64,8 +64,8 @@ void main() {
           pieChartData1 ==
               pieChartData1Clone.copyWith(
                 sections: [
-                  PieChartSectionData(value: 12, color: Colors.red),
-                  PieChartSectionData(value: 22, color: Colors.green.withOpacity(0.99)),
+                  PieChartSectionData(value: 12, colors: [Colors.red]),
+                  PieChartSectionData(value: 22, colors: [Colors.green.withOpacity(0.99)]),
                 ],
               ),
           false);
@@ -74,8 +74,8 @@ void main() {
           pieChartData1 ==
               pieChartData1Clone.copyWith(
                 sections: [
-                  PieChartSectionData(value: 22, color: Colors.green),
-                  PieChartSectionData(value: 12, color: Colors.red),
+                  PieChartSectionData(value: 22, colors: [Colors.green]),
+                  PieChartSectionData(value: 12, colors: [Colors.red]),
                 ],
               ),
           false);
@@ -117,7 +117,7 @@ void main() {
       );
 
       final PieChartSectionData sample1 = PieChartSectionData(
-        color: Colors.red,
+        colors: [Colors.red],
         radius: 12,
         showTitle: false,
         value: 33,
@@ -129,7 +129,7 @@ void main() {
       );
 
       final PieChartSectionData sample2 = PieChartSectionData(
-        color: Colors.red,
+        colors: [Colors.red],
         radius: 12,
         showTitle: false,
         value: 33,
@@ -142,7 +142,7 @@ void main() {
 
       expect(sample1 == sample2, true);
 
-      expect(sample1 == sample2.copyWith(color: Colors.white), false);
+      expect(sample1 == sample2.copyWith(colors: [Colors.white]), false);
 
       expect(sample1 == sample2.copyWith(radius: 12), true);
 
@@ -181,7 +181,7 @@ void main() {
       expect(
           sample1 ==
               PieChartSectionData(
-                color: Colors.red,
+                colors: [Colors.red],
                 radius: 12,
                 showTitle: false,
                 value: 33,
@@ -226,7 +226,7 @@ void main() {
     test('PieTouchResponse equality test', () {
       final PieTouchResponse sample1 = PieTouchResponse(
         PieChartSectionData(
-          color: Colors.green,
+          colors: [Colors.green],
           title: 'test',
           radius: 12,
         ),
@@ -237,7 +237,7 @@ void main() {
       );
       final PieTouchResponse sample2 = PieTouchResponse(
         PieChartSectionData(
-          color: Colors.green,
+          colors: [Colors.green],
           title: 'test',
           radius: 12,
         ),
@@ -251,7 +251,7 @@ void main() {
 
       PieTouchResponse changed = PieTouchResponse(
         PieChartSectionData(
-          color: Colors.green,
+          colors: [Colors.green],
           title: 'asdf',
           radius: 12,
         ),
@@ -265,7 +265,7 @@ void main() {
 
       changed = PieTouchResponse(
         PieChartSectionData(
-          color: Colors.red,
+          colors: [Colors.red],
           title: 'test',
           radius: 12,
         ),
@@ -279,7 +279,7 @@ void main() {
 
       changed = PieTouchResponse(
         PieChartSectionData(
-          color: Colors.green,
+          colors: [Colors.green],
           title: 'test',
           radius: 12,
         ),
@@ -293,7 +293,7 @@ void main() {
 
       changed = PieTouchResponse(
         PieChartSectionData(
-          color: Colors.green,
+          colors: [Colors.green],
           title: 'test',
           radius: 12,
         ),

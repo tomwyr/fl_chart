@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:fl_chart/src/chart/base/base_chart/base_chart_painter.dart';
@@ -101,11 +102,25 @@ class PieChartPainter extends BaseChartPainter<PieChartData> with TouchHandler<P
         radius: _calculateCenterRadius(viewSize, data.centerSpaceRadius) + (section.radius / 2),
       );
 
-      _sectionPaint.color = section.color;
       _sectionPaint.strokeWidth = section.radius;
 
       final double startAngle = tempAngle;
       final double sweepAngle = sectionDegree;
+
+      if (section.colors.length == 1) {
+        _sectionPaint.color = section.colors.first;
+        _sectionPaint.shader = null;
+      } else {
+        _sectionPaint.shader = ui.Gradient.sweep(
+          center,
+          section.colors,
+          section.colorStops,
+          TileMode.clamp,
+          radians(startAngle),
+          radians(startAngle + sweepAngle),
+        );
+      }
+
       canvas.drawArc(
         rect,
         radians(startAngle),

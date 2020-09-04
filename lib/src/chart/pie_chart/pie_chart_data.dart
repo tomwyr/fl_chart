@@ -6,6 +6,8 @@ import 'package:fl_chart/src/utils/lerp.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/lerp.dart';
+import '../../utils/utils.dart';
 import '../base/base_chart/base_chart_data.dart';
 import 'pie_chart.dart';
 
@@ -126,8 +128,12 @@ class PieChartSectionData with EquatableMixin {
   /// occupy ([value] / sumValues) * 360 degrees.
   final double value;
 
-  /// Defines the color of section.
-  final Color color;
+  /// Determines the color of pie chart section, if one color provided it applies a solid color,
+  /// otherwise it gradients between provided colors for drawing the section.
+  final List<Color> colors;
+
+  /// Determines the gradient color stops, if multiple [colors] provided.
+  final List<double> colorStops;
 
   /// Defines the radius of section.
   final double radius;
@@ -182,7 +188,8 @@ class PieChartSectionData with EquatableMixin {
   /// the value works the same way as [titlePositionPercentageOffset].
   PieChartSectionData({
     double value,
-    Color color,
+    List<Color> colors,
+    List<double> colorStops,
     double radius,
     bool showTitle,
     TextStyle titleStyle,
@@ -190,8 +197,13 @@ class PieChartSectionData with EquatableMixin {
     Widget badgeWidget,
     double titlePositionPercentageOffset,
     double badgePositionPercentageOffset,
-  })  : value = value ?? 10,
-        color = color ?? Colors.red,
+  })  : assert(
+          testIfColorsAndColorStopsMatch(colors, colorStops),
+          'colors and colorStops don\'t match',
+        ),
+        value = value ?? 10,
+        colors = colors ?? const [Colors.red],
+        colorStops = colorStops ?? getDefaultColorStops(colors.length),
         radius = radius ?? 40,
         showTitle = showTitle ?? true,
         titleStyle = titleStyle ??
@@ -205,7 +217,8 @@ class PieChartSectionData with EquatableMixin {
   /// and replaces provided values.
   PieChartSectionData copyWith({
     double value,
-    Color color,
+    List<Color> colors,
+    List<double> colorStops,
     double radius,
     bool showTitle,
     TextStyle titleStyle,
@@ -216,7 +229,8 @@ class PieChartSectionData with EquatableMixin {
   }) {
     return PieChartSectionData(
       value: value ?? this.value,
-      color: color ?? this.color,
+      colors: colors ?? this.colors,
+      colorStops: colors ?? this.colorStops,
       radius: radius ?? this.radius,
       showTitle: showTitle ?? this.showTitle,
       titleStyle: titleStyle ?? this.titleStyle,
@@ -233,7 +247,8 @@ class PieChartSectionData with EquatableMixin {
   static PieChartSectionData lerp(PieChartSectionData a, PieChartSectionData b, double t) {
     return PieChartSectionData(
       value: lerpDouble(a.value, b.value, t),
-      color: Color.lerp(a.color, b.color, t),
+      colors: lerpColorList(a.colors, b.colors, t),
+      colorStops: lerpDoubleList(a.colorStops, b.colorStops, t),
       radius: lerpDouble(a.radius, b.radius, t),
       showTitle: b.showTitle,
       titleStyle: TextStyle.lerp(a.titleStyle, b.titleStyle, t),
@@ -250,7 +265,8 @@ class PieChartSectionData with EquatableMixin {
   @override
   List<Object> get props => [
         value,
-        color,
+        colors,
+        colorStops,
         radius,
         showTitle,
         titleStyle,

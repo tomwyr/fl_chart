@@ -175,3 +175,29 @@ String formatNumber(double number) {
 
   return resultNumber + symbol;
 }
+
+/// Creates default color stops for gradient. For colorsLength <= 2 it return [0, 1],
+/// for 3 colors it return [0, 0.5, 1] and so on.
+List<double> getDefaultColorStops(int colorsLength) {
+  final int stopsLength = colorsLength == null || colorsLength == 1 ? 2 : colorsLength;
+
+  return List<double>(stopsLength)
+      .asMap()
+      .map((index, _) => MapEntry<int, double>(index, index * index / (stopsLength - 1)))
+      .values
+      .toList();
+}
+
+/// Checks if number of colors match number of colorStops.
+bool testIfColorsAndColorStopsMatch(List<Color> colors, List<double> colorStops) {
+  final hasNullOrOnlyColors =
+      colors == null && colorStops == null || colors != null && colorStops == null;
+
+  if (hasNullOrOnlyColors) {
+    return true;
+  }
+
+  return colors != null &&
+      colorStops != null &&
+      (colors.length <= 2 && colorStops.length == 2 || colors.length == colorStops.length);
+}
