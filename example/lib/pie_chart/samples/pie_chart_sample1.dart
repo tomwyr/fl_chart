@@ -99,7 +99,7 @@ class PieChartSample1State extends State {
         switch (i) {
           case 0:
             return PieChartSectionData(
-              color: const Color(0xff0293ee).withOpacity(opacity),
+              colors: [const Color(0xff0293ee).withOpacity(opacity)],
               value: 25,
               title: '',
               radius: 80,
@@ -109,7 +109,7 @@ class PieChartSample1State extends State {
             );
           case 1:
             return PieChartSectionData(
-              color: const Color(0xfff8b250).withOpacity(opacity),
+              colors: [const Color(0xfff8b250).withOpacity(opacity)],
               value: 25,
               title: '',
               radius: 65,
@@ -119,7 +119,7 @@ class PieChartSample1State extends State {
             );
           case 2:
             return PieChartSectionData(
-              color: const Color(0xff845bef).withOpacity(opacity),
+              colors: [const Color(0xff845bef).withOpacity(opacity)],
               value: 25,
               title: '',
               radius: 60,
@@ -129,7 +129,7 @@ class PieChartSample1State extends State {
             );
           case 3:
             return PieChartSectionData(
-              color: const Color(0xff13d38e).withOpacity(opacity),
+              colors: [const Color(0xff13d38e).withOpacity(opacity)],
               value: 25,
               title: '',
               radius: 70,
