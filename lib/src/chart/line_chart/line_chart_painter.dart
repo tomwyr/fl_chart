@@ -1156,11 +1156,15 @@ class LineChartPainter extends AxisChartPainter<LineChartData>
     final tooltipWidth = biggerWidth + tooltipData.tooltipPadding.horizontal;
     final tooltipHeight = sumTextsHeight + tooltipData.tooltipPadding.vertical;
 
+    final touchTooltipData = data.lineTouchData.touchTooltipData;
+    final bottomMargin = touchTooltipData.getTooltipBottomMargin?.call(showingTooltipSpots) ??
+        touchTooltipData.tooltipBottomMargin;
+
     double tooltipTopPosition;
     if (tooltipData.showOnTopOfTheChartBoxArea) {
-      tooltipTopPosition = 0 - tooltipHeight - tooltipData.tooltipBottomMargin;
+      tooltipTopPosition = 0 - tooltipHeight - bottomMargin;
     } else {
-      tooltipTopPosition = mostTopOffset.dy - tooltipHeight - tooltipData.tooltipBottomMargin;
+      tooltipTopPosition = mostTopOffset.dy - tooltipHeight - bottomMargin;
     }
 
     /// draw the background rect with rounded radius

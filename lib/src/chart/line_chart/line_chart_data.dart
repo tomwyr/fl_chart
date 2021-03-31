@@ -1433,6 +1433,11 @@ class LineTouchTooltipData with EquatableMixin {
   /// Applies a bottom margin for showing tooltip on top of rods.
   final double tooltipBottomMargin;
 
+  /// Retrieves bottom margin for each tooltip indicator separately. This overrides
+  /// [tooltipBottomMargin] if [getTooltipBottomMargin] is not null and it returns
+  /// non-null margin value for given tooltip indicator.
+  final GetTooltipBottomMargin? getTooltipBottomMargin;
+
   /// Restricts the tooltip's width.
   final double maxContentWidth;
 
@@ -1466,6 +1471,7 @@ class LineTouchTooltipData with EquatableMixin {
     double? tooltipRoundedRadius,
     EdgeInsets? tooltipPadding,
     double? tooltipBottomMargin,
+    GetTooltipBottomMargin? getTooltipBottomMargin,
     double? maxContentWidth,
     GetLineTooltipItems? getTooltipItems,
     bool? fitInsideHorizontally,
@@ -1475,6 +1481,7 @@ class LineTouchTooltipData with EquatableMixin {
         tooltipRoundedRadius = tooltipRoundedRadius ?? 4,
         tooltipPadding = tooltipPadding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         tooltipBottomMargin = tooltipBottomMargin ?? 16,
+        getTooltipBottomMargin = getTooltipBottomMargin,
         maxContentWidth = maxContentWidth ?? 120,
         getTooltipItems = getTooltipItems ?? defaultLineTooltipItem,
         fitInsideHorizontally = fitInsideHorizontally ?? false,
@@ -1489,6 +1496,7 @@ class LineTouchTooltipData with EquatableMixin {
         tooltipRoundedRadius,
         tooltipPadding,
         tooltipBottomMargin,
+        getTooltipBottomMargin,
         maxContentWidth,
         getTooltipItems,
         fitInsideHorizontally,
@@ -1505,6 +1513,9 @@ class LineTouchTooltipData with EquatableMixin {
 /// (length should be equal to the [touchedSpots.length]),
 /// to show inside the tooltip popup.
 typedef GetLineTooltipItems = List<LineTooltipItem?> Function(List<LineBarSpot> touchedSpots);
+
+/// Provides bottom margin value for an individual [ShowingTooltipIndicators]
+typedef GetTooltipBottomMargin = double? Function(ShowingTooltipIndicators);
 
 /// Default implementation for [LineTouchTooltipData.getTooltipItems].
 List<LineTooltipItem> defaultLineTooltipItem(List<LineBarSpot> touchedSpots) {
