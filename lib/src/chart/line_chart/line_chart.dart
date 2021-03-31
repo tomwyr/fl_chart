@@ -160,13 +160,19 @@ class _LineChartState extends AnimatedWidgetBaseState<LineChart> {
       return lineChartData;
     }
 
+    final showOnlyTouched = lineChartData.lineTouchData.showOnlyTouchedIndicators;
+
+    var showingTooltipIndicators = _showingTouchedTooltips;
+    if (!showOnlyTouched) showingTooltipIndicators += lineChartData.showingTooltipIndicators;
+
     return lineChartData.copyWith(
-      showingTooltipIndicators: _showingTouchedTooltips,
+      showingTooltipIndicators: showingTooltipIndicators,
       lineBarsData: lineChartData.lineBarsData.map((barData) {
         final index = lineChartData.lineBarsData.indexOf(barData);
-        return barData.copyWith(
-          showingIndicators: _showingTouchedIndicators[index] ?? [],
-        );
+        var showingIndicators = _showingTouchedIndicators[index] ?? [];
+        if (!showOnlyTouched) showingIndicators += barData.showingIndicators;
+
+        return barData.copyWith(showingIndicators: showingIndicators);
       }).toList(),
     );
   }

@@ -1308,6 +1308,10 @@ class LineTouchData extends FlTouchData with EquatableMixin {
   /// and goes through the targeted spot.
   final bool fullHeightTouchLine;
 
+  /// Determines whether touch event should override tooltip indicators
+  /// and show indicator only for touched value.
+  final bool showOnlyTouchedIndicators;
+
   /// Informs the touchResponses
   final Function(LineTouchResponse)? touchCallback;
 
@@ -1332,12 +1336,14 @@ class LineTouchData extends FlTouchData with EquatableMixin {
     double? touchSpotThreshold,
     bool? fullHeightTouchLine,
     bool? handleBuiltInTouches,
+    bool? showOnlyTouchedIndicators,
     Function(LineTouchResponse)? touchCallback,
   })  : touchTooltipData = touchTooltipData ?? LineTouchTooltipData(),
         getTouchedSpotIndicator = getTouchedSpotIndicator ?? defaultTouchedIndicators,
         touchSpotThreshold = touchSpotThreshold ?? 10,
         fullHeightTouchLine = fullHeightTouchLine ?? false,
         handleBuiltInTouches = handleBuiltInTouches ?? true,
+        showOnlyTouchedIndicators = showOnlyTouchedIndicators ?? true,
         touchCallback = touchCallback,
         super(enabled ?? true);
 
@@ -1350,6 +1356,7 @@ class LineTouchData extends FlTouchData with EquatableMixin {
     double? touchSpotThreshold,
     bool? fullHeightTouchLine,
     bool? handleBuiltInTouches,
+    bool? showOnlyTouchedIndicators,
     Function(LineTouchResponse)? touchCallback,
   }) {
     return LineTouchData(
@@ -1359,6 +1366,7 @@ class LineTouchData extends FlTouchData with EquatableMixin {
       touchSpotThreshold: touchSpotThreshold ?? this.touchSpotThreshold,
       fullHeightTouchLine: fullHeightTouchLine ?? this.fullHeightTouchLine,
       handleBuiltInTouches: handleBuiltInTouches ?? this.handleBuiltInTouches,
+      showOnlyTouchedIndicators: showOnlyTouchedIndicators ?? this.showOnlyTouchedIndicators,
       touchCallback: touchCallback ?? this.touchCallback,
     );
   }
@@ -1370,6 +1378,7 @@ class LineTouchData extends FlTouchData with EquatableMixin {
         getTouchedSpotIndicator,
         touchSpotThreshold,
         handleBuiltInTouches,
+        showOnlyTouchedIndicators,
         fullHeightTouchLine,
         touchCallback,
         enabled,
